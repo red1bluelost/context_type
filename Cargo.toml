@@ -1,0 +1,13 @@
+[package]
+name = "context_type"
+version = "0.1.0"
+edition = "2021"
+
+authors = ["Micah Weston <micahsweston@gmail.com>"]
+description = "Macros for wrapping built-in types with extra context"
+repository = "https://github.com/red1bluelost/context_type"
+keywords = ["macros", "context", "bool", "boolean"]
+
+license = "MIT OR Apache-2.0"
+
+[dependencies]
