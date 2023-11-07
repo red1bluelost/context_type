@@ -5,7 +5,7 @@
 ///
 /// # Example
 /// ```rust
-/// context_type::bool::yes_no!{
+/// context_type::boolean::yes_no!{
 ///     pub enum ClearFirst;
 /// }
 ///
@@ -25,12 +25,12 @@
 /// assert_eq!(v, vec![0, 0, 0, 0, 0]);
 /// ```
 #[macro_export]
-macro_rules! yes_no {
+macro_rules! __yes_no {
     {
         $(#[$attrs:meta])*
         $access:vis enum $name:ident;
     } => {
-        $crate::custom_bool!{
+        $crate::__custom_bool!{
             $(#[$attrs])*
             #[derive(Default)]
             $access enum $name {
@@ -43,7 +43,7 @@ macro_rules! yes_no {
 }
 
 #[macro_export]
-macro_rules! custom_bool {
+macro_rules! __custom_bool {
     (
         $(#[$attrs:meta])*
         $access:vis enum $name:ident {
@@ -136,4 +136,5 @@ macro_rules! __to_from_bool_unchecked {
     };
 }
 
-pub use {__to_from_bool, __to_from_bool_unchecked, custom_bool, yes_no};
+pub use {__custom_bool as custom_bool, __yes_no as yes_no};
+pub use {__to_from_bool, __to_from_bool_unchecked};
