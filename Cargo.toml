@@ -11,3 +11,4 @@ keywords = ["macros", "context", "bool", "boolean"]
 license = "MIT OR Apache-2.0"
 
 [dependencies]
+paste = "1.0.14"
