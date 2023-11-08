@@ -17,3 +17,14 @@ pub struct FailWithoutFullPathYesNo;
 /// ```
 #[cfg(doctest)]
 pub struct AllowFullPathYesNo;
+
+/// ```compile_fail
+/// context_type::boolean::yes_no! {
+///     enum Hello {
+///         default = 3
+///     }
+/// }
+///
+/// ```
+#[cfg(doctest)]
+pub struct FailWithInvalidDefaultWrongType;

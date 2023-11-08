@@ -24,24 +24,38 @@
 /// add_n_zeros(5, ClearFirst::Yes, &mut v);
 /// assert_eq!(v, vec![0, 0, 0, 0, 0]);
 /// ```
+#[doc(hidden)]
 #[macro_export]
 macro_rules! __yes_no {
     {
         $(#[$attrs:meta])*
         $access:vis enum $name:ident;
     } => {
-        $crate::__custom_bool!{
+        $crate::boolean::yes_no!{
             $(#[$attrs])*
-            #[derive(Default)]
+            $access enum $name {}
+        }
+    };
+
+    {
+        $(#[$attrs:meta])*
+        $access:vis enum $name:ident {
+            $($extras:tt)*
+        }
+    } => {
+        $crate::boolean::custom_bool!{
+            $(#[$attrs])*
             $access enum $name {
-                #[default]
                 No = false,
                 Yes = true,
             }
         }
-    }
+
+        $crate::__extras_yes_no!{ $name => [ $($extras)* ] }
+    };
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! __custom_bool {
     (
@@ -84,6 +98,30 @@ macro_rules! __custom_bool {
     }
 }
 
+#[doc(hidden)]
+#[macro_export]
+macro_rules! __extras_yes_no {
+    { $name:ident => [] } => {};
+
+    { $name:ident => [ default = $def_val:expr ] } => {
+        impl Default for $name {
+            fn default() -> $name {
+                ($def_val).into()
+            }
+        }
+    };
+
+    { $name:ident => [ default = $def_val:expr, $($extras:tt)* ] } => {
+        impl Default for $name {
+            fn default() -> $name {
+                ($def_val).into()
+            }
+        }
+        $crate::__extras_yes_no!{ $name => [ $($extras)* ] }
+    };
+}
+
+#[doc(hidden)]
 #[macro_export]
 macro_rules! __to_from_bool {
     [$name:ident, $a_id:ident = true, $b_id:ident = false,] => {
@@ -109,6 +147,7 @@ custom_bool! {
     }
 }
 
+#[doc(hidden)]
 #[macro_export]
 macro_rules! __to_from_bool_unchecked {
     {
@@ -136,5 +175,5 @@ macro_rules! __to_from_bool_unchecked {
     };
 }
 
+#[doc(inline)]
 pub use {__custom_bool as custom_bool, __yes_no as yes_no};
-pub use {__to_from_bool, __to_from_bool_unchecked};
