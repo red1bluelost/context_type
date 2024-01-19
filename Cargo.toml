@@ -7,6 +7,7 @@ authors = ["Micah Weston <micahsweston@gmail.com>"]
 description = "Macros for wrapping built-in types with extra context"
 repository = "https://github.com/red1bluelost/context_type"
 keywords = ["macros", "context", "bool", "boolean"]
+catagories = ["data-structures", "no-std", "rust-patterns"]
 
 license = "MIT OR Apache-2.0"
 

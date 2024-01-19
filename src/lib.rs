@@ -1,3 +1,4 @@
+#![no_std]
 pub mod boolean;
 
 pub mod __internal {
